@@ -143,7 +143,7 @@ def train_image_decoder(args):
                 tb.log_value(
                     'loss_angle_time', angle_loss, int(passed_time))
 
-        loss_train = loss
+        loss_train = loss.detach()
 
         tb.log_value('loss_e', loss, e)
         tb.log_value(
@@ -211,7 +211,9 @@ def train_image_decoder(args):
                 'loss_angle_e_val', angle_loss, e)
             break
 
-        if loss < loss_min:
+        loss_val = loss.detach()
+
+        if loss_val < loss_min:
             torch.save(
                 image_decoder.state_dict(),
                 args.sum_base_dir + '/model_best.pth')
@@ -221,4 +223,4 @@ def train_image_decoder(args):
             logger.info("Next best, saved the model")
 
         logger.info("Epoch done: loss_train {:.6f}, loss_val: {:.6f}".format(
-            loss_train, loss))
+            loss_train, loss_val))

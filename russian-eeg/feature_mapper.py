@@ -42,8 +42,8 @@ class AttnDecoderRNN(nn.Module):
 
 class FeatureMapper(nn.Module):
     def __init__(
-        self, n_cells, input_size,
-        lstm_hidden_size
+            self, n_cells, input_size,
+            lstm_hidden_size
     ):
         super(FeatureMapper, self).__init__()
         self.n_cells = n_cells

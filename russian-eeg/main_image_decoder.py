@@ -8,7 +8,6 @@ import time
 import logger
 import tensorboard_logger as tb
 
-
 logger = logger.getLogger('main')
 
 # Based on
@@ -33,7 +32,7 @@ parser.add_argument('--n_epochs', type=int, default=100,
                     help='number of epochs')
 parser.add_argument('--short-description', default='no_descr',
                     help='short description of the run params '
-                    '(used in TensorBoard)')
+                         '(used in TensorBoard)')
 
 
 def setup_loggings(args):
@@ -48,7 +47,6 @@ def setup_loggings(args):
 
 
 if __name__ == '__main__':
-
     args = parser.parse_args()
     setup_loggings(args)
 
