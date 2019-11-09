@@ -17,15 +17,6 @@ import tensorboard_logger as tb
 logger = logger.getLogger('train')
 
 
-if torch.cuda.is_available():
-    device = torch.device("cuda")
-    pin_memory = True
-else:
-    device = torch.device("cpu")
-    pin_memory = False
-print("Device: {}".format(device))
-
-
 def get_grad_sum(model):
     grads = {}
     # nans = 0
@@ -38,6 +29,14 @@ def get_grad_sum(model):
 
 
 def train_image_decoder(args):
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+        pin_memory = True
+    else:
+        device = torch.device("cpu")
+        pin_memory = False
+    print("Device: {}".format(device))
+
     print("Start training")
     image_decoder = ImageDecoder()
     image_decoder.to(device)
@@ -59,7 +58,7 @@ def train_image_decoder(args):
         transform=transform)
 
     dataloader = data.DataLoader(
-        dataset,
+        dataset, pin_memory=pin_memory,
         batch_sampler=SiameseSampler(dataset, args.batch_size, args.n_batches))
 
     start_time = time.time()
